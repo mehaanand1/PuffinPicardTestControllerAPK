@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:background="#0F172A">
+
+    <TextView
+        android:id="@+id/txt_app_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="🐧 PUFFIN/PICARD TEST CONTROLLER"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="#38BDF8"
+        android:gravity="center"
+        android:layout_marginBottom="4dp"/>
+
+    <TextView
+        android:id="@+id/tvDetectedPlatform"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="SYSTEM: DETECTING..."
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:textColor="#FACC15"
+        android:gravity="center"
+        android:fontFamily="monospace"
+        android:layout_marginBottom="2dp"/>
+
+    <TextView
+        android:id="@+id/txt_adb_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="[TARGET: FETCHING SERIAL... • ADB ONLINE]"
+        android:textSize="11sp"
+        android:textStyle="bold"
+        android:textColor="#4ADE80"
+        android:gravity="center"
+        android:fontFamily="monospace"
+        android:layout_marginBottom="20dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SELECT TEST SCENARIO:"
+        android:textStyle="bold"
+        android:textSize="12sp"
+        android:textColor="#94A3B8"
+        android:fontFamily="monospace"
+        android:layout_marginBottom="8dp"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#1E293B"
+        android:layout_marginBottom="16dp"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp">
+
+        <Spinner
+            android:id="@+id/spinner_tests"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:spinnerMode="dropdown"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="▼"
+            android:textColor="#94A3B8"
+            android:textSize="12sp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="20dp">
+
+        <Button
+            android:id="@+id/btn_run_test"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_weight="1"
+            android:text="▶ EXECUTE"
+            android:backgroundTint="#0EA5E9"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:layout_marginEnd="8dp"/>
+
+        <Button
+            android:id="@+id/btn_cancel_test"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_weight="1"
+            android:text="⏹ CANCEL"
+            android:backgroundTint="#334155"
+            android:textColor="#94A3B8"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:enabled="false"
+            android:layout_marginStart="8dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="8dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="LIVE CONSOLE OUTPUT:"
+            android:textStyle="bold"
+            android:textSize="12sp"
+            android:textColor="#94A3B8"
+            android:fontFamily="monospace"/>
+
+        <!-- CLEAR BUTTON -->
+        <Button
+            android:id="@+id/btnClearConsole"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:text="CLEAR"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            android:backgroundTint="#334155"
+            android:textColor="#38BDF8"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:layout_marginEnd="8dp"/>
+
+        <TextView
+            android:id="@+id/txt_status_badge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="IDLE"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            android:textColor="#94A3B8"
+            android:background="#1E293B"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
+            android:fontFamily="monospace"/>
+    </LinearLayout>
+
+    <!-- CONSOLE SCROLLVIEW -->
+    <ScrollView
+        android:id="@+id/scroll_console"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#020617"
+        android:padding="12dp"
+        android:layout_marginBottom="12dp">
+
+        <TextView
+            android:id="@+id/txt_console_output"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="[SYSTEM]: Awaiting target selection from test engineer...\n"
+            android:fontFamily="monospace"
+            android:textColor="#38BDF8"
+            android:textSize="12sp"/>
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/txt_suite_target"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Target: src/goldbug/tests/device_tests/test_ota_apps.py"
+        android:textSize="10sp"
+        android:fontFamily="monospace"
+        android:textColor="#64748B"/>
+
+</LinearLayout>

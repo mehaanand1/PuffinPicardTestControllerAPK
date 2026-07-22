@@ -16,7 +16,7 @@ An Android test controller application designed for Flock Safety hardware target
 3. Search **`Build APK`** and click on "Generate APK" as shown in the image below. <img width="667" height="25" alt="image" src="https://github.com/user-attachments/assets/a8ba1a87-7575-4cdc-9f81-286ae3c143fa" />
 4. Locate the generated binary in:
    ```text
-   app/build/outputs/apk/debug/app-debug.apk```
+   app/build/outputs/apk/debug/app-debug.apk
    <img width="376" height="96" alt="image" src="https://github.com/user-attachments/assets/4cd7c2da-983c-406c-90b8-5fd716f726e2" />
 5. Transfer this `.apk` file to the host/jumpbox machine connected to the target node you want to test.
 6. Follow the **Sideloading & Installation (MANUAL or AUTOMATED)** steps below to deploy and launch the app on the target node via ADB.
@@ -26,7 +26,7 @@ An Android test controller application designed for Flock Safety hardware target
 Use these steps to transfer, sideload, and execute the application on your target board via ADB.
 1. Verify ADB Connection - Ensure your target hardware is powered on and recognized by your host system:
   ```bash
-  adb devices
+  adb devices```
 2. Move APK to Workspace (If using ScreenConnect / Remote PC). If transferring the APK via ScreenConnect or remote desktop to your lab machine, copy it to your local workspace and update permissions:
   ```bash
   sudo cp /root/ScreenConnect/Files/app-debug.apk ~/Downloads/app-debug.apk

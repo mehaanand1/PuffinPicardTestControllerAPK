@@ -23,7 +23,7 @@ An Android test controller application designed for Flock Safety hardware target
 ---
 
 ## Sideloading & Installation Instructions (MANUAL)
-Use these steps to transfer, sideload, and execute the application on your target board via ADB.
+Use these steps to transfer, sideload, and execute the application on your target board via ADB **MANUALLY**.
 1. Verify ADB Connection - Ensure your target hardware is powered on and recognized by your host system:
   ```bash
   adb devices
@@ -37,14 +37,18 @@ Use these steps to transfer, sideload, and execute the application on your targe
   ```bash
   adb -s <DEVICE_SERIAL> uninstall com.example.puffintestcontroller
   adb -s <DEVICE_SERIAL> install ~/Downloads/app-debug.apk
+  ```
 4. Launch Application with Dynamic Target Serial. Start the MainActivity on the node while passing the target serial number as an intent extra:
   ```bash
   adb -s <DEVICE_SERIAL> shell am start \
     -n com.example.puffintestcontroller/.MainActivity \
     --es "SERIAL_NO" "<DEVICE_SERIAL>"
+  ```
 5. Launch Live Screen Mirroring (scrcpy). To view and interact with the target device's display remotely on your host machine:
   ```bash
   scrcpy -s <DEVICE_SERIAL>
+  ```
 
-## Sideloading & Installation Instructions (AUTOMATED)
+## Sideloading & Installation Instructions (AUTOMATED)**
+Use these steps to transfer, sideload, and execute the application on your target board via Chase's **AUTOMATION** script.
 

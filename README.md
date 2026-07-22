@@ -26,11 +26,13 @@ An Android test controller application designed for Flock Safety hardware target
 Use these steps to transfer, sideload, and execute the application on your target board via ADB.
 1. Verify ADB Connection - Ensure your target hardware is powered on and recognized by your host system:
   ```bash
-  adb devices```
+  adb devices
+  ```
 2. Move APK to Workspace (If using ScreenConnect / Remote PC). If transferring the APK via ScreenConnect or remote desktop to your lab machine, copy it to your local workspace and update permissions:
   ```bash
   sudo cp /root/ScreenConnect/Files/app-debug.apk ~/Downloads/app-debug.apk
   sudo chown $USER:$USER ~/Downloads/app-debug.apk
+  ```
 3. Uninstall Old Build & Sideload New APK. Remove the previous installation to clear cached state, then install the fresh binary:
   ```bash
   adb -s <DEVICE_SERIAL> uninstall com.example.puffintestcontroller

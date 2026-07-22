@@ -16,7 +16,7 @@ An Android test controller application designed for Flock Safety hardware target
 3. Search **`Build APK`** and click on "Generate APK" as shown in the image below. <img width="667" height="25" alt="image" src="https://github.com/user-attachments/assets/a8ba1a87-7575-4cdc-9f81-286ae3c143fa" />
 4. Locate the generated binary in:
    ```text
-   app/build/outputs/apk/debug/app-debug.apk
+   app/build/outputs/apk/debug/app-debug.apk```
    <img width="376" height="96" alt="image" src="https://github.com/user-attachments/assets/4cd7c2da-983c-406c-90b8-5fd716f726e2" />
 5. Transfer this `.apk` file to the host/jumpbox machine connected to the target node you want to test.
 6. Follow the **Sideloading & Installation (MANUAL or AUTOMATED)** steps below to deploy and launch the app on the target node via ADB.

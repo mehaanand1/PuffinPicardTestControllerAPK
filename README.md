@@ -52,3 +52,16 @@ Use these steps to transfer, sideload, and execute the application on your targe
 ## Sideloading & Installation Instructions (AUTOMATED)**
 Use these steps to transfer, sideload, and execute the application on your target board via Chase's **AUTOMATION** script.
 
+To batch-install the built APK (and any other target APKs) across all connected ADB devices automatically:
+
+1. **Place APKs in the installation folder:**
+   Copy the generated `app-debug.apk` (or third-party test APKs) into `./scripts/apks/`:
+   ```bash
+   cp app/build/outputs/apk/debug/app-debug.apk ./scripts/apks/
+   ```
+2. Run the Batch Installer Script:
+   ```bash
+   ./scripts/install_apks.sh ./scripts/apks/
+   ```
+The script scans all connected ADB targets, streams the installation of every APK found in ./scripts/apks/, and reports completion status per serial number.
+

@@ -49,7 +49,7 @@ Use these steps to transfer, sideload, and execute the application on your targe
   scrcpy -s <DEVICE_SERIAL>
   ```
 
-## Sideloading & Installation Instructions (AUTOMATED)** - PREFERRED METHOD
+## Sideloading & Installation Instructions (AUTOMATED) - PREFERRED METHOD
 Use these steps to transfer, sideload, and execute the application on your target board via Chase's **AUTOMATION** script.
 
 To batch-install the built APK (and any other target APKs) across all connected ADB devices automatically:

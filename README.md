@@ -6,7 +6,7 @@ An Android test controller application designed for Flock Safety hardware target
 
 ## Features
 
-* **Dynamic Hardware Auto-Detection:** 
+* **Dynamic Hardware Auto-Detection:** Automatically detects target board models via system properties.
 
 ---
 
@@ -19,7 +19,7 @@ An Android test controller application designed for Flock Safety hardware target
    app/build/outputs/apk/debug/app-debug.apk
    <img width="376" height="96" alt="image" src="https://github.com/user-attachments/assets/4cd7c2da-983c-406c-90b8-5fd716f726e2" />
 5. Transfer this `.apk` file to the host/jumpbox machine connected to the target node you want to test.
-6. Follow the **Sideloading & Installation (MANUAL or AUTOMATED)** steps below to deploy and launch the app on the target node via ADB.
+6. Follow the **Sideloading & Installation (MANUAL or AUTOMATED (PREFERRED))** steps below to deploy and launch the app on the target node via ADB.
 ---
 
 ## Sideloading & Installation Instructions (MANUAL)
@@ -49,7 +49,7 @@ Use these steps to transfer, sideload, and execute the application on your targe
   scrcpy -s <DEVICE_SERIAL>
   ```
 
-## Sideloading & Installation Instructions (AUTOMATED)**
+## Sideloading & Installation Instructions (AUTOMATED)** - PREFERRED METHOD
 Use these steps to transfer, sideload, and execute the application on your target board via Chase's **AUTOMATION** script.
 
 To batch-install the built APK (and any other target APKs) across all connected ADB devices automatically:
@@ -63,5 +63,15 @@ To batch-install the built APK (and any other target APKs) across all connected 
    ```bash
    ./scripts/install_apks.sh ./scripts/apks/
    ```
-The script scans all connected ADB targets, streams the installation of every APK found in ./scripts/apks/, and reports completion status per serial number.
-
+   The script scans all connected ADB targets, streams the installation of every APK found in ./scripts/apks/, and reports completion status per serial number.
+3. Launch Application & View Screen:
+   # Launch MainActivity with target serial extra
+   ```bash
+   adb -s <DEVICE_SERIAL> shell am start \
+     -n com.example.puffintestcontroller/.MainActivity \
+     --es "SERIAL_NO" "<DEVICE_SERIAL>"
+   ```
+   # Open interactive display mirror
+   ```bash
+   scrcpy -s <DEVICE_SERIAL>
+   ```

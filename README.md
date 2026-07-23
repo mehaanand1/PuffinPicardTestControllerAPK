@@ -65,13 +65,13 @@ To batch-install the built APK (and any other target APKs) across all connected 
    ```
    The script scans all connected ADB targets, streams the installation of every APK found in ./scripts/apks/, and reports completion status per serial number.
 3. Launch Application & View Screen:
-   # Launch MainActivity with target serial extra
+   Launch MainActivity with target serial extra:
    ```bash
    adb -s <DEVICE_SERIAL> shell am start \
      -n com.example.puffintestcontroller/.MainActivity \
      --es "SERIAL_NO" "<DEVICE_SERIAL>"
    ```
-   # Open interactive display mirror
+   Open interactive display mirror:
    ```bash
    scrcpy -s <DEVICE_SERIAL>
    ```

@@ -23,7 +23,8 @@ An Android test controller application designed for Flock Safety hardware target
 ---
 
 ## Sideloading & Installation Instructions (MANUAL)
-Use these steps to transfer, sideload, and execute the application on your target board via ADB **MANUALLY**.
+Use these steps to transfer, sideload, and execute the application on your target board via ADB **MANUALLY**. 
+**NOTE**: If you'd like to use Chase's automated script, skip this section and follow the steps in the next section!
 1. Verify ADB Connection - Ensure your target hardware is powered on and recognized by your host system:
   ```bash
   adb devices

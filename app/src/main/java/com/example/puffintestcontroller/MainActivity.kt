@@ -106,13 +106,17 @@ class MainActivity : AppCompatActivity() {
             txtConsoleOutput.text = "[SYSTEM]: Console cleared by operator.\n"
         }
 
-        val testOptions = listOf("test_ota_apps", "pipeline_stability_test", "test_device_shipmode")
+        val testOptions = listOf(
+    "test_puffin_flash_qdl", 
+    "test_install_apps", 
+    "test_dut_boots_successfully"
+)
 
-        val targetPaths = mapOf(
-            "test_ota_apps" to "src/goldbug/tests/device_tests/test_ota_apps.py",
-            "pipeline_stability_test" to "src/goldbug/tests/device_tests/test_bat.py::test_partition_mounts_and_size",
-            "test_device_shipmode" to "src/goldbug/tests/device_tests/test_bat.py::test_device_shipmode"
-        )
+val targetPaths = mapOf(
+    "test_puffin_flash_qdl" to "src/goldbug/tests/device_tests/test_puffin_flash_qdl.py::test_puffin_flash_qdl",
+    "test_install_apps" to "src/goldbug/tests/device_tests/test_install_apps.py::test_install_apps",
+    "test_dut_boots_successfully" to "src/goldbug/tests/device_tests/test_bat.py::test_dut_boots_successfully"
+)
 
         val adapter =
             object : ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, testOptions) {

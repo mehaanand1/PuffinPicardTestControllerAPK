@@ -1,5 +1,9 @@
 package com.example.puffintestcontroller
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -26,6 +30,47 @@ class MainActivity : AppCompatActivity() {
     @Volatile
     private var isTestRunning = false
 
+    // Views declared at class level so the BroadcastReceiver can update them live
+    private lateinit var txtConsoleOutput: TextView
+    private lateinit var scrollConsole: ScrollView
+    private lateinit var txtStatusBadge: TextView
+
+    // BroadcastReceiver to catch ADB broadcasts sent from Jenkins / Pytest
+    private val adbLogReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            val logMessage = intent?.getStringExtra("LOG_MSG")
+            val status = intent?.getStringExtra("STATUS") // Optional: "PASSED", "FAILED", "RUNNING"
+
+            if (logMessage != null) {
+                appendAndLogConsole(
+                    "$logMessage\n",
+                    txtConsoleOutput,
+                    scrollConsole
+                )
+            }
+
+            if (status != null) {
+                when (status.uppercase()) {
+                    "PASSED" -> {
+                        txtStatusBadge.text = "PASSED"
+                        txtStatusBadge.setTextColor(Color.WHITE)
+                        txtStatusBadge.setBackgroundColor(Color.parseColor("#10B981"))
+                    }
+                    "RUNNING" -> {
+                        txtStatusBadge.text = "RUNNING"
+                        txtStatusBadge.setTextColor(Color.BLACK)
+                        txtStatusBadge.setBackgroundColor(Color.parseColor("#F59E0B"))
+                    }
+                    "FAILED" -> {
+                        txtStatusBadge.text = "FAILED"
+                        txtStatusBadge.setTextColor(Color.WHITE)
+                        txtStatusBadge.setBackgroundColor(Color.parseColor("#EF4444"))
+                    }
+                }
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -35,11 +80,21 @@ class MainActivity : AppCompatActivity() {
         val spinnerTests = findViewById<Spinner>(R.id.spinner_tests)
         val btnRunTest = findViewById<Button>(R.id.btn_run_test)
         val btnCancelTest = findViewById<Button>(R.id.btn_cancel_test)
-        val txtConsoleOutput = findViewById<TextView>(R.id.txt_console_output)
         val txtSuiteTarget = findViewById<TextView>(R.id.txt_suite_target)
-        val scrollConsole = findViewById<ScrollView>(R.id.scroll_console)
         val txtAdbStatus = findViewById<TextView>(R.id.txt_adb_status)
-        val txtStatusBadge = findViewById<TextView>(R.id.txt_status_badge)
+
+        // Assign class-level views
+        txtConsoleOutput = findViewById(R.id.txt_console_output)
+        scrollConsole = findViewById(R.id.scroll_console)
+        txtStatusBadge = findViewById(R.id.txt_status_badge)
+
+        // Register BroadcastReceiver for live ADB commands from Pytest/Jenkins
+        val filter = IntentFilter("com.example.puffintestcontroller.UPDATE_LOG")
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            registerReceiver(adbLogReceiver, filter, RECEIVER_EXPORTED)
+        } else {
+            registerReceiver(adbLogReceiver, filter)
+        }
 
         val detectedSystem = detectDevicePlatform()
         tvDetectedPlatform.text = "SYSTEM: $detectedSystem"
@@ -100,7 +155,6 @@ class MainActivity : AppCompatActivity() {
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
 
-
         btnRunTest.setOnClickListener {
             val selectedTest = spinnerTests.selectedItem.toString()
             isTestRunning = true
@@ -128,15 +182,14 @@ class MainActivity : AppCompatActivity() {
                 )
 
                 for (step in steps) {
-                    if (!isTestRunning) break // Stop if user hit Cancel!
+                    if (!isTestRunning) break
 
                     runOnUiThread {
                         appendAndLogConsole(step, txtConsoleOutput, scrollConsole)
                     }
-                    Thread.sleep(1500) // 1.5 second pause between steps
+                    Thread.sleep(1500)
                 }
 
-                // If test finished naturally without cancellation
                 if (isTestRunning) {
                     isTestRunning = false
                     runOnUiThread {
@@ -191,6 +244,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterReceiver(adbLogReceiver)
+    }
+
     private fun appendAndLogConsole(text: String, textView: TextView, scrollView: ScrollView) {
         textView.append(text)
         scrollView.post { scrollView.fullScroll(ScrollView.FOCUS_DOWN) }
@@ -225,10 +283,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    /**
-     * Attempts to read a system property via Runtime exec shell command.
-     * Needed to bypass Android SELinux restrictions on persist.* vendor properties.
-     */
     private fun getShellProperty(propName: String): String {
         return try {
             val process = Runtime.getRuntime().exec("getprop $propName")
@@ -240,10 +294,6 @@ class MainActivity : AppCompatActivity() {
             ""
         }
     }
-
-    /**
-     * Reads system properties natively via SystemProperties reflection.
-     */
 
     private fun getSystemProperty(key: String): String {
         return try {
